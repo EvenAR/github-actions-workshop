@@ -1,5 +1,16 @@
 name: Deploy
 on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      imageName:
+        required: true
+        type: string
+      digest:
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       environment:

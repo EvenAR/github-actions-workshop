@@ -4,12 +4,20 @@ on:
       should_push:
         required: true
         type: boolean
+    outputs:
+      imageName:
+        value: ${{ jobs.build.outputs.imageName }}
+      digest:
+        value: ${{ jobs.build.outputs.digest }}
 
 jobs:
   build:
     permissions:
       packages: write
     runs-on: "ubuntu-latest"
+    outputs:
+      imageName: ${{ fromJson(steps.build-push.outputs.metadata)['image.name'] }}
+      digest: ${{ steps.build-push.outputs.digest }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Docker Buildx
@@ -21,6 +29,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
       - name: Build and push Docker image
+        id: build-push
         uses: docker/build-push-action@v5
         with:
           push: ${{ inputs.should_push }}

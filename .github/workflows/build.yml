@@ -10,3 +10,19 @@ jobs:
     uses: ./.github/workflows/reusable.build.yml
     with:
       should_push: true
+
+  deploy-test:
+    uses: ./.github/workflows/deploy.yml
+    needs: build
+    with:
+      environment: test
+      imageName: ${{ needs.build.outputs.imageName }}
+      digest: ${{ needs.build.outputs.digest }}
+
+  deploy-production:
+    uses: ./.github/workflows/deploy.yml
+    needs: build
+    with:
+      environment: production
+      imageName: ${{ needs.build.outputs.imageName }}
+      digest: ${{ needs.build.outputs.digest }}
