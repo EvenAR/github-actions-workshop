@@ -16,5 +16,6 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - run: echo "Deploying ${{ inputs.imageName }} with digest ${{ inputs.digest }}. Environment variable ${{ vars.WORKSHOP_ENV_VARIABLE }}"
