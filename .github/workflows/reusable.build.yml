@@ -23,5 +23,5 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          push: ${{ github.event.inputs.should_push }}
+          push: ${{ inputs.should_push }}
           tags: ghcr.io/evenar/github-actions-workshop:latest
