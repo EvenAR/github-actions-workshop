@@ -13,7 +13,7 @@ jobs:
 
   deploy-test:
     uses: ./.github/workflows/deploy.yml
-    needs: build
+    needs: [build]
     with:
       environment: test
       imageName: ${{ needs.build.outputs.imageName }}
@@ -21,7 +21,7 @@ jobs:
 
   deploy-production:
     uses: ./.github/workflows/deploy.yml
-    needs: build
+    needs: [build, deploy-test]
     with:
       environment: production
       imageName: ${{ needs.build.outputs.imageName }}
